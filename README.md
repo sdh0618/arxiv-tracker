@@ -1,4 +1,12 @@
+# Arxiv Tracker
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+Arxiv Tracker is a web application designed to help users keep track of the latest research papers on arXiv.org. It allows users to search for papers, save their favorite ones, and receive notifications about new papers in their fields of interest. The application leverages the power of Next.js for server-side rendering and fast performance.
+
+## Created with GitHub Copilot
+
+This project was created with the assistance of [GitHub Copilot](https://github.com/features/copilot), an AI-powered code completion tool that helps developers write code faster and with greater accuracy.
 
 ## Getting Started
 
