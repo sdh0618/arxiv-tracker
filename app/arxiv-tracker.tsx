@@ -54,6 +54,12 @@ export default function ArXivTracker() {
     localStorage.setItem('tags', JSON.stringify(tags))
   }, [savedPapers, tags])
 
+  useEffect(() => {
+    if (selectedTags.length > 0) {
+      searchPapers(0)
+    }
+  }, [selectedTags])
+
   const toggleAllTags = () => {
     if (allTagsSelected) {
       setSelectedTags([])
@@ -157,7 +163,7 @@ export default function ArXivTracker() {
           onChange={(e) => setQuery(e.target.value)}
           className="flex-grow"
         />
-        <Button onClick={() => searchPapers(0)} disabled={loading}>
+        <Button onClick={() => searchPapers(0)} disabled={loading || selectedTags.length === 0}>
           {loading ? "Searching..." : "Search"}
           <Search className="ml-2 h-4 w-4" />
         </Button>
@@ -228,39 +234,45 @@ export default function ArXivTracker() {
           <TabsTrigger value="saved">Saved Papers</TabsTrigger>
         </TabsList>
         <TabsContent value="search">
-          {papers.map(paper => (
-            <Card key={paper.id} className="mb-4">
-              <CardHeader>
-                <CardTitle>{paper.title}</CardTitle>
-                <CardDescription>
-                  {paper.authors.join(', ')} - {new Date(paper.published).toLocaleDateString()}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">{paper.summary.slice(0, 200)}...</p>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button variant="outline" onClick={() => savePaper(paper)}>
-                  <Bookmark className="mr-2 h-4 w-4" />
-                  Save
-                </Button>
-                <a href={paper.id} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    View on arXiv
+          {selectedTags.length === 0 ? (
+            <p className="text-gray-600">Select tags to see search results.</p>
+          ) : (
+            papers.map(paper => (
+              <Card key={paper.id} className="mb-4">
+                <CardHeader>
+                  <CardTitle>{paper.title}</CardTitle>
+                  <CardDescription>
+                    {paper.authors.join(', ')} - {new Date(paper.published).toLocaleDateString()}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">{paper.summary.slice(0, 200)}...</p>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline" onClick={() => savePaper(paper)}>
+                    <Bookmark className="mr-2 h-4 w-4" />
+                    Save
                   </Button>
-                </a>
-              </CardFooter>
-            </Card>
-          ))}
-          <div className="flex justify-between mt-4">
-            <Button onClick={() => searchPapers(currentPage - 1)} disabled={currentPage === 0}>
-              Previous
-            </Button>
-            <Button onClick={() => searchPapers(currentPage + 1)} disabled={(currentPage + 1) * resultsPerPage >= totalResults}>
-              Next
-            </Button>
-          </div>
+                  <a href={paper.id} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline">
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      View on arXiv
+                    </Button>
+                  </a>
+                </CardFooter>
+              </Card>
+            ))
+          )}
+          {selectedTags.length > 0 && (
+            <div className="flex justify-between mt-4">
+              <Button onClick={() => searchPapers(currentPage - 1)} disabled={currentPage === 0}>
+                Previous
+              </Button>
+              <Button onClick={() => searchPapers(currentPage + 1)} disabled={(currentPage + 1) * resultsPerPage >= totalResults}>
+                Next
+              </Button>
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="saved">
           {savedPapers.map(paper => (
