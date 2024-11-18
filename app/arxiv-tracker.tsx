@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { saveSearch, getSearches } from './db'
 
 interface Paper {
   id: string
@@ -96,6 +97,8 @@ export default function ArXivTracker() {
 
       if (parsedPapers.length === 0) {
         setError("No results found. Try broadening your search or using fewer tags.")
+      } else {
+        await saveSearch(searchQuery, parsedPapers)
       }
     } catch (error) {
       console.error("Error fetching papers:", error)
