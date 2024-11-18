@@ -159,7 +159,7 @@ export default function ArXivTracker() {
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-2">Tags:</h2>
         <div className="flex flex-wrap gap-2 mb-2 max-h-32 overflow-y-auto">
-          {tags.map(tag => (
+          {tags.sort((a, b) => a.name.localeCompare(b.name)).map(tag => (
             <Badge 
               key={tag.id} 
               variant={selectedTags.includes(tag.id) ? "default" : "outline"}
