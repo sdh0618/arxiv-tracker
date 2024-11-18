@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Search, Bookmark, ExternalLink, X, AlertCircle } from 'lucide-react'
+import { Bookmark, ExternalLink, X, AlertCircle } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -163,11 +163,7 @@ export default function ArXivTracker() {
           onChange={(e) => setQuery(e.target.value)}
           className="flex-grow"
         />
-        <Button onClick={() => searchPapers(0)} disabled={loading || selectedTags.length === 0}>
-          {loading ? "Searching..." : "Search"}
-          <Search className="ml-2 h-4 w-4" />
-        </Button>
-        <Button onClick={saveTag} variant="outline">
+        <Button onClick={saveTag} variant="outline" className="bg-black text-white">
           Save as Tag
         </Button>
         <Button onClick={toggleAllTags} variant="outline">
