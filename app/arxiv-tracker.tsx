@@ -36,6 +36,7 @@ export default function ArXivTracker() {
   const [currentPage, setCurrentPage] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
   const resultsPerPage = 10
+  const [allTagsSelected, setAllTagsSelected] = useState(false)
 
   useEffect(() => {
     const saved = localStorage.getItem('savedPapers')
@@ -52,6 +53,15 @@ export default function ArXivTracker() {
     localStorage.setItem('savedPapers', JSON.stringify(savedPapers))
     localStorage.setItem('tags', JSON.stringify(tags))
   }, [savedPapers, tags])
+
+  const toggleAllTags = () => {
+    if (allTagsSelected) {
+      setSelectedTags([])
+    } else {
+      setSelectedTags(tags.map(tag => tag.id))
+    }
+    setAllTagsSelected(!allTagsSelected)
+  }
 
   const searchPapers = async (page = 0) => {
     setLoading(true)
@@ -153,6 +163,9 @@ export default function ArXivTracker() {
         </Button>
         <Button onClick={saveTag} variant="outline">
           Save as Tag
+        </Button>
+        <Button onClick={toggleAllTags} variant="outline">
+          {allTagsSelected ? "Unselect All Tags" : "Select All Tags"}
         </Button>
       </div>
 
