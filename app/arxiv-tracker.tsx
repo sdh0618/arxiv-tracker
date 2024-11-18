@@ -30,7 +30,7 @@ export default function ArXivTracker() {
   const [savedPapers, setSavedPapers] = useState<Paper[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
   const [combineTags, setCombineTags] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(0)
